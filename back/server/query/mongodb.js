@@ -12,10 +12,7 @@ const start = async () => {
     }
 }
 
-module.exports.registration = async (data) => {
-    data.password = await hashedPassword.hashPassword(data.password);
-    data.refreshToken = "";
-    
+module.exports.registration = async (data) => {  
     const client = await start();
     const users = await client.db().collection('users');
     users.insertOne(data);
@@ -39,4 +36,11 @@ module.exports.chackRefreshToken = async (refreshToken) => {
     const users = await client.db("testDB").collection('users');
     const result = await users.find({refreshToken}).toArray();
     return result[0].email;
+}
+
+module.exports.people = async (refreshToken) => {
+    const client = await start();
+    const users = await client.db("testDB").collection('users');
+    const result = await users.find({refreshToken: {$ne: refreshToken}}).project({name: 1, personalFotoName: 1}).toArray();
+    return result;
 }

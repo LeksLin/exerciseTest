@@ -70,7 +70,6 @@ const checkToken = async (req, res, next) => {
         next();
     }else{
         if(checkValidity(req.cookies.rt, refreshTokenSecret)){
-            console.log(req.cookies.rt)
             const user = await mongodb.chackRefreshToken(req.cookies.rt);
             const accessToken = generationAccessToken({user});
             res.cookie('at', accessToken, {

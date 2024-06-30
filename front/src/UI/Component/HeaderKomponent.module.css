@@ -1,0 +1,12 @@
+.headerCont{
+    background-color: #4682B4;
+    display: flex;
+    justify-content: end;
+    padding: 10px 30px;
+}
+
+.headerLink{
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}

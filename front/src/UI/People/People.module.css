@@ -1,0 +1,74 @@
+.cardContainer{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+.card{
+    position: relative;
+    text-decoration: none;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    color: black;
+    
+    z-index: 2;
+}
+.cardCont{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+.card:hover .lineCrad::after{
+    width: 100%;
+}
+.card:hover .lineCrad{
+    background-color: rgba(0, 0, 0,.2);
+}
+.lineCrad{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    transition: .2s;
+}
+.lineCrad::after{
+    content: "";
+    position: absolute;
+    width: 90%;
+    height: 0%;
+    left: 0;
+    bottom: 0;
+    border-bottom: 2px solid #4682B4;
+    z-index: 1;
+    transition: width .2s;
+}
+
+.cardImgBord{
+    position: relative;
+    min-width: 80px;
+    min-height: 80px;
+    border-radius: 100%;
+    z-index: 1;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.cardImg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: block;
+    width: 80px;
+    z-index: 2;
+}
+
+.nameUser{
+    width: 100%;
+}

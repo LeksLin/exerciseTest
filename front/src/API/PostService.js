@@ -48,11 +48,11 @@ export  default class PostService{
 
     static async postPeople () {
         const url = `${host}/api/people`;
-        await axios.get(url, {
+
+        return await axios.get(url, {
             withCredentials: true
-        })
-        .then((result) => {
-            console.log(result)
+        }).catch((e) => {
+            console.error(e);
         })
     }
 }

@@ -11,9 +11,3 @@ export const publicRoutes = [
     {path: '/people', component: People, exact: true},
     {path: '/people/НеПомню!!!!', component: PeopleCard, exact: true}
 ]
-
-export const privateRoutes = [
-    {path: '/account', component: Account, exact: true},
-    {path: '/people', component: People, exact: true},
-    {path: '/people/НеПомню!!!!', component: PeopleCard, exact: true}
-]

@@ -9,5 +9,5 @@ export const publicRoutes = [
     {path: '/', component: Authorization, exact: true},
     {path: '/account', component: Account, exact: true},
     {path: '/people', component: People, exact: true},
-    {path: '/people/НеПомню!!!!', component: PeopleCard, exact: true}
+    {path: '/people/:id', component: PeopleCard, exact: true}
 ]

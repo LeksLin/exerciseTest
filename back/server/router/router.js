@@ -12,8 +12,11 @@ router.post('/registration', upload.single('file'), registrationController.Contr
 router.post('/authorization', autorizationController.Controller);
 router.post('/accountUpdateFile', tokenMiddleware.checkToken, upload.single('file'), accountController.Controller);
 router.post('/accountUpdate', tokenMiddleware.checkToken, accountController.Controller);
+router.post('/peopleOne', tokenMiddleware.checkToken, peopleContoller.ControllerPeopleCard);
 
-//GET
+//GET 
 router.get('/people', tokenMiddleware.checkToken, peopleContoller.Controller);
+router.get('/userInf', tokenMiddleware.checkToken, peopleContoller.ControllerUser);
+router.get('/exit', tokenMiddleware.DeleteToken);
 
 module.exports = router;

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import PostService from '../../API/PostService';
-import { Link } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import cl from './People.module.css';
+import PeopleCard from "../PeopleCard/PeopleCard";
 
 const People = () => {
     const [people, setPeople] = useState([]);
@@ -18,14 +19,13 @@ const People = () => {
                     <Link className={cl.card} to={`/people/${e._id.toString()}`} key={e._id.toString()}>
                         <div className={cl.cardCont}>
                             <div className={cl.cardImgBord}>
-                                <img className={cl.cardImg} src={e.personalFotoName} alt="Ошибка"/>
+                                <img className={cl.cardImg} src={`/static/${e.personalFotoName}`} alt="Ошибка"/>
                             </div>
                             <p className={cl.nameUser}>{e.name}</p>
                         </div>
                         
                         <div className={cl.lineCrad}></div>
                     </Link>
-                    
                 </div>
             ))}
         </div>

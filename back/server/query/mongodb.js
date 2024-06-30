@@ -1,4 +1,4 @@
-const {MongoClient} = require('mongodb');
+const {MongoClient, ObjectId} = require('mongodb');
 const hashedPassword = require('../middleware/hashPassword');
 
 const client = new MongoClient('mongodb://localhost:27017/testDB');
@@ -35,7 +35,7 @@ module.exports.chackRefreshToken = async (refreshToken) => {
     const client = await start();
     const users = await client.db("testDB").collection('users');
     const result = await users.findOne({refreshToken});
-    return result[0].email;
+    return result.email;
 }
 
 module.exports.people = async (refreshToken) => {
@@ -43,6 +43,20 @@ module.exports.people = async (refreshToken) => {
     const users = await client.db("testDB").collection('users');
     const result = await users.find({refreshToken: {$ne: refreshToken}}).project({name: 1, personalFotoName: 1}).toArray();
     return result;
+}
+
+module.exports.userInf = async (refreshToken) =>{
+    const client = await start();
+    const users = await client.db("testDB").collection('users');
+    const result = await users.find({refreshToken}).project({name: 1, personalFotoName: 1}).toArray();
+    return result;
+}
+
+module.exports.peopleCard = async (id) => {
+    const client = await start();
+    const users = await client.db("testDB").collection('users');
+    const result = await users.find({_id: new ObjectId(id)}).project({name: 1, personalFotoName: 1, date: 1}).toArray();
+    return result[0];
 }
 
 module.exports.accountFotoCheck = async (refreshToken) => {
@@ -57,4 +71,10 @@ module.exports.accountUpdate = async (refreshToken, data) => {
     const users = await client.db("testDB").collection('users');
     const result = await users.updateOne({refreshToken}, {$set: data});
     return result;
+}
+
+module.exports.delteRefreshToken = async (refreshToken) => {
+    const client = await start();
+    const users = await client.db("testDB").collection('users');
+    const result = await users.updateOne({refreshToken}, {$set: {refreshToken}});
 }

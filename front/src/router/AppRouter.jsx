@@ -8,7 +8,7 @@ const AppRouter = () => {
     const link = useLocation();
     return (
         <div className={cl.container}>
-            {link.pathname != '/auth' ? <HeaderKomponent/> : ''}
+            {link.pathname != '/' && link.pathname != '/registration' ? <HeaderKomponent/> : ''}
             <Routes>
                 {publicRoutes.map(route => <Route path={route.path} element={<route.component />} exact={route.exact} key={route.path} />)}
             </Routes>

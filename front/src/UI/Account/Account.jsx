@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {useForm} from "react-hook-form";
 import PostService from '../../API/PostService';
 import InputCast from "../Component/InputCast";
 import cl from './Account.module.css';
+import clStyle from "../style.module.css";
 
 const Account = () => {
+    const navigate = useNavigate();
     const {register, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = (data) => {
         let check = false;
@@ -24,21 +27,29 @@ const Account = () => {
         if(check){
             PostService.postAccount(json).then((result) => {
                 if(result){
-                    // navigate('/people');
+                    navigate('/people');
                 }
             })
         }
     };
+
+    const exit = () => {
+        PostService.getExit();
+        navigate('/');
+    }
     return (
         <div className={cl.AccountCont}>
-            <div className={cl.buttonBack}>
-                <button className={`${cl.button} ${cl.button150}`} type="button">Назад</button>
+            <div className={clStyle.buttonBack}>
+                <Link className={`${clStyle.button} ${clStyle.button150}`} to="/people">Назад</Link>
             </div>
-            <form className={cl.container} onSubmit={handleSubmit(onSubmit)}>
+            <div className={clStyle.buttonBack}>
+                <button className={`${clStyle.button} ${clStyle.button150}`} type="button" onClick={exit}>Выйти</button>
+            </div>
+            <form className={clStyle.container} onSubmit={handleSubmit(onSubmit)}>
             
                 <h2>Изменить пользователя</h2>
                 <InputCast 
-                    nameInput="Имя" 
+                    nameInput="Email" 
                     messageInput={errors.name?.message} 
                     type="text"
                     placeholder={"LeksLin"}
@@ -67,7 +78,7 @@ const Account = () => {
                     type="file"
                     register = {register("foto")} 
                 />
-                <button className={`${cl.button} ${cl.button400}`} type="submit">Изменить</button>
+                <button className={`${clStyle.button} ${clStyle.button400}`} type="submit">Изменить</button>
             </form>
         </div>
     )

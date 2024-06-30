@@ -3,45 +3,6 @@ const mongodb = require('../query/mongodb');
 
 const accessTokenSecret = 'youraccesstokensecret';
 const refreshTokenSecret = 'yourrefreshtokensecret';
-const refreshTokens = [];
-
-module.exports = function (req, res, next){
-    if(req.method === "OPTIONS"){
-        next();
-    }
-    try{
-        const token = req.headers.authorization.split(' ')[1] // Bearer jskdnfjonsdjonfonsd
-        if(!token){
-            return res.status(401).json({massage: 'Не авторизован'});
-        }
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        console.log(decoded);
-        req.user = decoded;
-        next();
-    }catch (e){
-        res.status(401).json({massage: 'Не авторизован'});
-    }
-
-
-
-
-    const { token } = req.body;
-    if (!token) {
-        return res.sendStatus(401);
-    }
-    if (!refreshTokens.includes(token)) {
-        return res.sendStatus(403);
-    }
-    jwt.verify(token, refreshTokenSecret, (err, user) => {
-        if (err) {
-            return res.sendStatus(403);
-        }
-        const accessToken = jwt.sign({ username: user.username }, accessTokenSecret, { expiresIn: '1h' });
-        res.json({
-            accessToken
-        });
-    });
-}
 
 const checkValidity = (token, secret) => {
     let resultCheck = false;
@@ -94,8 +55,29 @@ const generationRefreshToken = (user) => {
     return refreshToken;
 }
 
+const DeleteToken = async (req, res) => {
+    console.log(1)
+    if(checkValidity(req.cookies.at, accessTokenSecret)){
+        res.clearCookie('at', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict'
+        })
+    }
+    if(checkValidity(req.cookies.rt, refreshTokenSecret)){
+        res.clearCookie('rt', {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict'
+        })
+        await mongodb.delteRefreshToken(req.cookies.rt);
+    }
+    res.status(200).send();
+}
+
 module.exports = {
     generationAccessToken,
     generationRefreshToken,
-    checkToken
+    checkToken,
+    DeleteToken
 }

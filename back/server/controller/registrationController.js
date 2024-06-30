@@ -14,7 +14,8 @@ module.exports.Controller = async (req, res) => {
         data.password = await hashedPassword.hashPassword(data.password);
         data.refreshToken = "";
         mongodb.registration(data);
+        res.status(200).send();
     }else{
-        return res.status(400).res({message: 'Пользователь с таким email уже существует!'})
+        return res.status(400).json({message: 'Пользователь с таким email уже существует!'})
     }
 }

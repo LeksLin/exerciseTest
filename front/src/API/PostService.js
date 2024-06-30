@@ -14,7 +14,7 @@ export  default class PostService{
             }
             });
         } catch (error) {
-            console.error('Error uploading file:', error);
+            console.error(error);
         }
     }
 
@@ -54,6 +54,45 @@ export  default class PostService{
         }).catch((e) => {
             console.error(e);
         })
+    }
+
+    static async postAccount (data) {
+        console.log(data)
+        if(data.foto){
+            const {foto, ...dataInf} = data;
+            const formData = new FormData();
+            formData.append('file', foto[0]);
+            formData.append('data', JSON.stringify(dataInf));
+            const url = `${host}/api/accountUpdateFile`;
+            try {
+                return await axios.post(url, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }else{
+            const url = `${host}/api/accountUpdate`;
+            await axios.post(url, JSON.stringify(data), {
+                headers: {
+                    "Content-type": "application/json",
+                    "charset": "UTF-8"
+                },
+                withCredentials: true
+            })
+            .then((response) => {
+                
+                if(response.status == 200){
+                    console.log(response.status)
+                    // statusAuth = true;
+                }
+            })
+            .catch((error) => {
+                console.error('Ошибка:', error);
+            });
+        }
     }
 }
 

@@ -9,18 +9,6 @@ const People = () => {
         PostService.postPeople().then((result) => {
             setPeople(result.data);
         });
-        // setPeople([
-        //     {
-        //       _id: '6681365ba882d2b36ea3ff95',
-        //       name: 'LeksLin',
-        //       personalFotoName: 'Ozl1QJi6pm4.jpg'
-        //     },
-        //     {
-        //       _id: '6681366aa882d2b36ea3ff96',
-        //       name: 'LeksLin1',
-        //       personalFotoName: 'Ozl1QJi6pm4.jpg'
-        //     }
-        //   ]);
     }, []);
     return (
         <div>
